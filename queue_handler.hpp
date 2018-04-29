@@ -14,7 +14,7 @@ class QueueHandler {
 
       T pop() {
         std::unique_lock<std::mutex> lk(m_mtx);
-        if (this->m_queue.empty()) {
+        while (this->m_queue.empty()) {
           m_cv.wait(lk);
         }
         T next = std::move(this->m_queue.front());
