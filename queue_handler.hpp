@@ -15,10 +15,8 @@ class QueueHandler {
 
       T pop() {
         std::unique_lock<std::mutex> lk(m_mtx);
-        while (this->m_queue.empty()) {
-          m_cv.wait(lk);
-        }
-        T next = std::move(this->m_queue.front());
+        m_cv.wait(lk, [this]{return !m_queue.empty();});
+        T next = std::move_if_noexcept(this->m_queue.front());
         this->m_queue.pop();
         lk.unlock();
         return next;
@@ -27,7 +25,7 @@ class QueueHandler {
       T pop_try() {
         std::lock_guard<std::mutex> lk(m_mtx);
         if (!this->m_queue.empty()) {
-          T next = std::move(this->m_queue.front());
+          T next = std::move_if_noexcept(this->m_queue.front());
           this->m_queue.pop();
           return next;
         } else {
@@ -41,7 +39,7 @@ class QueueHandler {
             if (this->m_queue.size() == this->m_max_queue_size) {
                 throw -1;
             }
-            this->m_queue.push(move(WorkItem));
+            this->m_queue.push(std::move_if_noexcept(WorkItem));
           }
           m_cv.notify_one();
       }
