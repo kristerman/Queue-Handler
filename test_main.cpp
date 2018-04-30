@@ -61,7 +61,7 @@ int main(int argc, char **argv) {
         exit_msg();
     }
 
-    QueueHandler<shared_ptr<WorkItem> > q{};
+    QueueHandler<shared_ptr<WorkItem> > q(8);
 
     // Add some items to the queue initially
     for (int i = 0; i < 3; ++i) {

@@ -9,8 +9,9 @@
 template<class T>
 class QueueHandler {
     public:
-      QueueHandler() {}
-      ~QueueHandler() {}
+      QueueHandler(uint max_queue_size) {
+        m_max_queue_size = max_queue_size;
+      }
 
       T pop() {
         std::unique_lock<std::mutex> lk(m_mtx);
