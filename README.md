@@ -23,8 +23,10 @@ If there is no item method throws -1 and thus reader thread should call pop_try 
 To demonstrate how this class will work, a test WorkItem class has been created as well as
 a main uses the 2 threads mentioned in a way that could simulate a realistic use.
 
-Compile by: g++11 -std=c++11 work_item.cpp test_main.cpp -pthread -o queue-test
+Compile by: g++ -std=c++11 work_item.cpp test_main.cpp -pthread -o queue-test
 The executable can be run by: ./queue-test [pop|pop_try]
 Depending on which method the reader thread will be using.
+
+Note: When run using pop, program must be terminated by user (Ctrl + C).
 
 

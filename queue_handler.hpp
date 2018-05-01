@@ -9,7 +9,7 @@
 template<class T>
 class QueueHandler {
     public:
-      QueueHandler(uint max_queue_size) {
+      QueueHandler(uint max_queue_size = 6) {
         m_max_queue_size = max_queue_size;
       }
 
@@ -46,7 +46,7 @@ class QueueHandler {
 
     private:
       std::queue<T> m_queue;
-      uint m_max_queue_size = 6;
+      uint m_max_queue_size;
       std::mutex m_mtx;
       std::condition_variable m_cv;
   };

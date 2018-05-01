@@ -1,4 +1,5 @@
 #include <iostream>
+#include <cstring>
 #include <thread>
 #include <chrono>
 #include <mutex>
@@ -77,7 +78,8 @@ int main(int argc, char **argv) {
 
     // Add some items to the queue initially
     for (int i = 0; i < 3; ++i) {
-        shared_ptr<WorkItem> sp(new WorkItem);
+        shared_ptr<WorkItem> sp(new WorkItem(i));
+        cout << "Inserting " << *sp << endl;
         q.push(sp);
     }
 
